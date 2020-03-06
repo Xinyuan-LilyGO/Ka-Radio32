@@ -88,6 +88,7 @@ static void init_i2s(renderer_config_t *config)
 	gpio_num_t bclk;
 	gpio_num_t i2sdata;
 	gpio_get_i2s(&lrck ,&bclk ,&i2sdata );
+    ESP_LOGI(TAG,"LRCK:%d bclk:%d i2sdata:%d",lrck,bclk,i2sdata);
 
 	i2s_pin_config_t pin_config = {
 				.bck_io_num = bclk,

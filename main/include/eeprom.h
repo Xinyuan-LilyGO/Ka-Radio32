@@ -81,6 +81,7 @@ struct device_settings {
 	char hostname[HOSTLEN];
 	uint32_t tp_calx;
 	uint32_t tp_caly;
+	uint8_t mute_gpio;
 
 } Device_Settings;
 

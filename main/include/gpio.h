@@ -149,5 +149,5 @@ void option_set_lcd_stop(uint32_t enca);
 void option_set_lcd_out(uint32_t enca);
 void option_set_lcd_blv(int blv);
 uint8_t gpioToChannel(uint8_t gpio);
-
+void gpio_get_mutegpio(gpio_num_t *mute);
 #endif

@@ -890,14 +890,15 @@ void app_main()
 			g_device->uartspeed = 115200; // default
 //			g_device->audio_output_mode = I2S; // default
 			option_get_audio_output(&(g_device->audio_output_mode));
-			g_device->trace_level = ESP_LOG_ERROR; //default
+			g_device->trace_level = ESP_LOG_INFO; //default
 			g_device->vol = 100; //default
 			g_device->led_gpio = GPIO_NONE;
+			g_device->mute_gpio = GPIO_NONE;
 			saveDeviceSettings(g_device);			
 		} else
 			ESP_LOGE(TAG,"Device config restored");
 	}	
-	
+	g_device->trace_level = ESP_LOG_INFO; //default
 	copyDeviceSettings(); // copy in the safe partion
 
 	
@@ -945,8 +946,15 @@ void app_main()
 
 		//init the amp shutdown gpio4 as output level 1
 		gpio_output_conf(PIN_AUDIO_SHDN);
-		
 	}	
+
+
+	gpio_num_t mute_gpio = GPIO_NONE;
+	gpio_get_mutegpio(&mute_gpio);
+	ESP_LOGE(TAG,"gpio_get_mutegpio:%d",mute_gpio);
+	if(mute_gpio != GPIO_NONE){
+		gpio_output_conf(mute_gpio);
+	}
 	
 /*	
 	// Init i2c if lcd doesn't not (spi) for rde5807=

@@ -72,6 +72,7 @@ void VS1053_spi_init(){
 	
 	gpio_get_spi_bus(&spi_no,&miso,&mosi,&sclk);	
 	if(spi_no > 2) return; //Only VSPI and HSPI are valid spi modules. 	
+	ESP_LOGI(TAG,"MISO:%d MOSI:%d SCLK:%d",miso,mosi,sclk);
 
 	spi_bus_config_t buscfg={
         .miso_io_num=(miso!=GPIO_NONE)?miso:-1,

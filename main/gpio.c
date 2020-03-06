@@ -121,6 +121,7 @@ void gpio_get_spi_bus(uint8_t *spi_no,gpio_num_t *miso,gpio_num_t *mosi,gpio_num
 	if (mosi != NULL)err |=nvs_get_u8(hardware_handle, "P_MOSI",(uint8_t *) mosi);
 	if (sclk != NULL)err |=nvs_get_u8(hardware_handle, "P_CLK", (uint8_t *)sclk);
 	if (err != ESP_OK) ESP_LOGD(TAG,"g_get_spi_bus err 0x%x",err);
+
 	close_partition(hardware_handle,hardware);
 	
 }
@@ -387,7 +388,25 @@ ESP_LOGD(TAG,"lcd_blv3");
 	close_partition(hardware_handle,hardware);		
 }
 
+void gpio_get_mutegpio(gpio_num_t *mute)
+{
+	esp_err_t err;
+	nvs_handle hardware_handle;
+	
+	// init default
+	*mute = g_device->mute_gpio;
 
+	if (open_partition(hardware, gpio_space,NVS_READONLY,&hardware_handle)!= ESP_OK)
+	{
+		ESP_LOGD(TAG,"mutegpio");
+		return;
+	}	
+	
+	err = nvs_get_u8(hardware_handle, "P_MUTE_GPIO",(uint8_t *) mute);
+	if (err != ESP_OK) ESP_LOGD(TAG,"g_get_mutegpio err 0x%x",err);
+
+	close_partition(hardware_handle,hardware);	
+}
 
 void gpio_get_ledgpio(gpio_num_t *enca)
 {
